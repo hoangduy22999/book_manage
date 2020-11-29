@@ -1,8 +1,7 @@
-
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Thefirstrails</title>
+    <title>Ourfirstrails</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,15 +10,15 @@
   </head>
 
   <body>
-     <%= link_to "ホーム", root_path %>
-     <% if user_signed_in? %>
-       <p>こんにちわ, <%= link_to current_user.email  , users_show_path %> </p>
-       <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-     <% else %>
-       <%= link_to "サインイン", new_user_session_path %>
-       <%= link_to "ユーザ登録", new_user_registration_path %>
-     <% end %>
-    <hr>
+    <%= link_to "ホーム", root_path %>
+    <% if user_signed_in? %>
+    <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+    <%= link_to current_user.name  , users_show_path %>
+    <% else %>
+    <%= link_to "サインイン", new_user_session_path %>
+    <%= link_to "ユーザ登録", new_user_registration_path %>
+    <% end %>
+<hr>
     <%= yield %>
   </body>
 </html>
