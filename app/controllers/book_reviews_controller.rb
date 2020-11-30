@@ -25,10 +25,12 @@ class BookReviewsController < ApplicationController
   # POST /book_reviews.json
   def create
     @book_review = BookReview.new(book_review_params)
+    @book_review.user_id = current_user.id
 
     respond_to do |format|
       if @book_review.save
-        format.html { redirect_to @book_review, notice: 'Book review was successfully created.' }
+        url = "/books/" + @book_review.book_id.to_s
+        format.html { redirect_to url, notice: 'Book review was successfully created.' }
         format.json { render :show, status: :created, location: @book_review }
       else
         format.html { render :new }
@@ -42,8 +44,7 @@ class BookReviewsController < ApplicationController
   def update
     respond_to do |format|
       if @book_review.update(book_review_params)
-        url = "/books/" + @book_review.book_id.to_s
-        format.html { redirect_to url, notice: 'Book review was successfully created.' }
+        format.html { redirect_to @book_review, notice: 'Book review was successfully updated.' }
         format.json { render :show, status: :ok, location: @book_review }
       else
         format.html { render :edit }
@@ -70,6 +71,6 @@ class BookReviewsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_review_params
-      params.require(:book_review).permit(:user_id)
+      params.require(:book_review).permit(:user_id, :book_id, :review)
     end
 end
